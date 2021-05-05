@@ -13,7 +13,7 @@ Allows you to configure the access that each role will have to a specific record
 
 ## ADempiere-ZK version
 
-<img :src="$withBase('/images/components/record-access/ZKaccesstorecords.png')" alt="Acceso a Registro Versión de Escritorio ZK" width="800px">
+<img :src="$withBase('/images/components/record-access/ZK_access-to-records.png')" alt="Acceso a Registro Versión de Escritorio ZK" width="800px">
 
 ## ADempiere-Vue version
 
