@@ -43,4 +43,4 @@ Sirve para conigurar los accesos y bloqueos de un rol en un registro en específ
 
 ## Funciones u Observaciones
 - Función: Configuración de roles para dar acceso o bloquear un regitro
-- Obseración: Solo se aplica por regitros y por roles, es decir que si se desea configurar por uno o ma registros estos deben hacer uno por uno
+- Obseración: Solo se aplica por regitros y por roles, es decir que si se desea configurar por uno o ma registros estos deben hacer uno por uno.
