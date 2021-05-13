@@ -12,7 +12,7 @@ export default {
     profile: 'Perfil',
     ProcessActivity: 'Histórico Procesos',
     withoutLog: 'No se Encontró Registro de Error ',
-    ProductInfo: 'Informacion de Producto',
+    ProductInfo: 'Información de Producto',
     role: 'Rol',
     organization: 'Organización',
     warehouse: 'Almacén',
@@ -102,7 +102,7 @@ export default {
     releases: 'Liberaciones',
     branches: 'Ramas',
     code: 'Código',
-    issues: 'Solicitudes de extracción',
+    issues: 'Asuntos',
     downloadZip: 'descargar  Zip',
     releaseNotes: 'Nota de Liberaciones'
 
@@ -285,7 +285,7 @@ export default {
     deleteRecord: 'Eliminar Registro',
     undoNew: 'Descartar Nuevo Registro',
     containerInfo: {
-      notes: 'Notas',
+      notes: 'Listado de Notas',
       changeLog: 'Actividad',
       workflowLog: 'Histórico de Flujo de Trabajo',
       changeDetail: 'Detalle del cambio',
@@ -303,10 +303,13 @@ export default {
   },
   field: {
     field: 'Campo',
-    info: 'Informacion',
+    info: 'Información',
     calculator: 'Calculadora',
     preference: 'Preferencia',
-    codeTranslation: 'Traduccion de Codigo',
+    codeTranslation: 'Traduccion de ',
+    logsField: 'Bitácora de Cambios',
+    contextInfo: 'Información del Contexto',
+    logsFieldEmpty: 'El campo no tiene cambios aún',
     container: {
       help: 'Ayuda',
       description: 'Descripción'
@@ -319,7 +322,7 @@ export default {
     deleteRecordSuccessful: 'Registro eliminado exitosamente',
     deleteRecordError: 'Error al eliminar el regitro',
     exportRecord: 'Exportar Registro',
-    lockRecord: 'Bloquear Registro',
+    lockRecord: 'Registro Bloqueado',
     noDescription: 'Sin Descripción',
     recordAccess: {
       modeMobile: {
@@ -334,10 +337,18 @@ export default {
       isReadonly: 'Solo  Lectura',
       isDependentEntities: 'Entidades Dependientes',
       isLock: 'Bloquear',
-      isUnlock: 'Desbloquear'
+      isUnlock: 'Desbloquear',
+      isError: 'Error al '
     },
     selectionRequired: 'Debe seleccionar un registro',
     undo: 'Deshacer',
+    notification: {
+      lockRecord: 'El Registro fue Bloqueado',
+      unlockRecord: 'El Registro fue Desbloqueado'
+    },
+    addNote: 'Agregar Nota',
+    emptyNote: 'Este registro no posee ninguna nota',
+    descriptionNote: 'Agregar Nota o Comentario al Registro',
     unlockRecord: 'Desbloquear Registro'
   },
   sequence: {

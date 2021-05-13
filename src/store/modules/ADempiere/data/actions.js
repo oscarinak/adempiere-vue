@@ -2,11 +2,11 @@
 import {
   requestGetEntity,
   requestListEntities
-} from '@/api/ADempiere/persistence.js'
+} from '@/api/ADempiere/common/persistence.js'
 import {
   requestDefaultValue,
   requestGetContextInfoValue
-} from '@/api/ADempiere/values'
+} from '@/api/ADempiere/window'
 import {
   getPrivateAccess,
   lockPrivateAccess,
@@ -731,16 +731,18 @@ const actions = {
     contextInfoUuid,
     sqlStatement
   }) {
-    const contextInforField = getters.getContextInfoField(contextInfoUuid, sqlStatement)
-    if (contextInforField) {
-      return contextInforField
-    }
+    // const contextInforField = getters.getContextInfoField(contextInfoUuid, sqlStatement)
+    // console.log({ contextInforField })
+    // if (contextInforField) {
+    //   return contextInforField
+    // }
     return requestGetContextInfoValue({
       id: contextInfoId,
       uuid: contextInfoUuid,
       query: sqlStatement
     })
       .then(contextInfoResponse => {
+        console.log({ contextInfoResponse })
         commit('setContextInfoField', {
           contextInfoUuid,
           sqlStatement,

@@ -1,5 +1,5 @@
-import { recursiveTreeSearch } from '@/utils/ADempiere/valueUtils.js'
-import { requestListDocumentActions, requestListDocumentStatuses } from '@/api/ADempiere/window'
+import { isEmptyValue, recursiveTreeSearch } from '@/utils/ADempiere/valueUtils.js'
+import { requestListDocumentActions, requestListDocumentStatuses } from '@/api/ADempiere/workflow'
 
 // Store used for set all related to context menu
 // for Window, Process, Smart Browser andother customized component
@@ -30,7 +30,9 @@ const initStateContextMenu = {
     recordUuid: undefined
   },
   recordAccess: false,
-  embedded: {}
+  embedded: {
+    name: ''
+  }
 }
 
 const contextMenu = {
@@ -48,8 +50,11 @@ const contextMenu = {
     addlistDocumentStatus(state, payload) {
       state.listDocumentStatus = payload
     },
-    changeShowRigthPanel(state) {
-      state.isShowRightPanel = !state.isShowRightPanel
+    changeShowRigthPanel(state, params) {
+      if (isEmptyValue(params)) {
+        state.isShowRightPanel = !state.isShowRightPanel
+      }
+      state.isShowRightPanel = params
     },
     changeShowPopoverField(state) {
       state.isShowPopoverField = !state.isShowPopoverField

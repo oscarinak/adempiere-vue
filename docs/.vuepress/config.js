@@ -285,7 +285,12 @@ function genAdvancedSidebar(type = '') {
 function genComponentSidebar(type = '') {
   const mapArr = [
     '/guide/components/preference.md',
-    '/guide/components/record-access.md'
+    '/guide/components/record-access.md',
+    '/guide/components/notes.md',
+    '/guide/components/information.md',
+    '/guide/components/update.md',
+    '/guide/components/translation.md',
+    '/guide/components/zoom-in.md'
   ]
   return mapArr.map(i => {
     return type + i

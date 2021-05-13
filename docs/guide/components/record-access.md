@@ -1,9 +1,9 @@
-# Access to Records
+# Record Access
 
 Allows you to configure the access that each role will have to a specific record or view based on the following parameters:
 
-  - ** Available Roles **: There are all the roles created in ADempiere, which do not have any configuration of the registry which is positioned
-  - ** Configured Roles **: There are the roles which will have a configuration of access or blocking to a specific record, these accesses or
+  - **Available Roles**: There are all the roles created in ADempiere, which do not have any configuration of the registry which is positioned
+  - **Configured Roles**: There are the roles which will have a configuration of access or blocking to a specific record, these accesses or
   locks depends on the following options:
     - Block: When this option is checked, the role is blocked from accessing and viewing the registry, having this option enabled enables the following option:
       - Dependent Entities: Checking this option leaves only one records active and the other records dependent on it blocks them
@@ -69,3 +69,30 @@ In the mobile version this component is used as follows:
 
 
 ## Developer Options
+
+The **Records Access** dialog is located in the following path:
+
+```bash
+└── src                             # Main source code
+    └── components                  # Global components
+        └── ADempiere               # ADempiere specific components
+            └── RecordAccess        # Records Access main directory
+
+```
+Here you can see a [Demo](https://demo-ui.erpya.com/#/7aa4242a-93c0-42d8-92be-8250002d3e3c/d97027fd-4cd5-445e-8fd8-ef5d3f7959b4/window/147?tabParent=0&tabChild=0&action=43adbe9d-04a7-4cf6-9582-895c1e40da0b&typeAction=recordAccess)
+
+The **Records Access** service consumption call can be found in the following path:
+```bash
+└─ src                            # Main source code.
+    └─ api                        # Global services
+      └─ ADempiere                # ADempiere specific services
+            └─ actions            # Actions
+                └─ record-access  # Records Access main service directory
+
+```
+
+
+The services called from the component are <br>
+[GET adempiere-api/ui/getRecordAccess](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)<br>
+[POST adempiere-api/ui/setRecordAccess](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)
+

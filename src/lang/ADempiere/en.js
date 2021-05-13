@@ -309,7 +309,7 @@ export default {
     deleteRecord: 'Delete Record',
     undoNew: 'Undo New Record',
     containerInfo: {
-      notes: 'Notes',
+      notes: 'Notes List',
       changeLog: 'ACtivity',
       workflowLog: 'Workflow Log',
       changeDetail: 'Change detail',
@@ -330,7 +330,10 @@ export default {
     info: 'Information',
     calculator: 'Calculator',
     preference: 'Preference',
-    codeTranslation: 'Traduccion de Codigo',
+    logsField: 'Field Change Log',
+    logsFieldEmpty: 'The field is still unchanged',
+    contextInfo: 'Context Info',
+    codeTranslation: 'Translation Of ',
     container: {
       help: 'Help',
       description: 'Description'
@@ -358,10 +361,18 @@ export default {
       isReadonly: 'Reading Only',
       isDependentEntities: 'Dependent Entities',
       isLock: 'Block',
-      isUnlock: 'Unblock'
+      isUnlock: 'Unblock',
+      isError: 'Error on '
     },
     selectionRequired: 'You must select a record',
     undo: 'Undo',
+    notification: {
+      lockRecord: 'The Registry was Locked',
+      unlockRecord: 'Registry was Unlocked'
+    },
+    addNote: 'Add Note',
+    emptyNote: 'Este registro no posee ninguna nota',
+    descriptionNote: 'Add Note or Comment to Record',
     unlockRecord: 'Unlock Record'
   },
   sequence: {

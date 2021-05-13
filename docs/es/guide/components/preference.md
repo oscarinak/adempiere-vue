@@ -41,25 +41,9 @@ Por defecto, el campo contiene de la configuración de preferencia
 
 En la versión de escritorio se hace clic sobre el campo para visualizar el menú desplegado por el mismo, luego se selecciona la opción "**Preferencia**", para establecer el valor de preferencia requerido.
 
-### Crear Preferencia
-
-![Cómo crear preferencia en la versión de Escritorio]('/images/components/preference/zk-desktop-version-preference.gif' "Cómo crear preferencia en la versión de Escritorio")
-
-### Borrar Preferencia
-
-![Cómo borrar preferencia en la versión de Escritorio]('/images/components/preference/zk-desktop-version-preference.gif' "Cómo borrar preferencia en la versión de Escritorio")
-
 ## ¿Cómo se utiliza en la versión móvil?
 
 En la versión móvil se hace clic sobre el campo para visualizar el menú desplegado por el mismo, luego se selecciona la opción "**Preferencia**", para establecer el valor de preferencia requerido.
-
-### Crear Preferencia
-
-![Cómo crear preferencia en la versión móvil]('/images/components/preference/preference-desktop-mobile.gif' "Cómo crear preferencia en la versión móvil")
-
-### Borrar Preferencia
-
-![Cómo borrar preferencia en la versión móvil]('/images/components/preference/preference-desktop-mobile.gif' "Cómo borrar preferencia en la versión móvil")
 
 ## Opciones para el Desarrollador
 
@@ -74,11 +58,25 @@ El diálogo de **Preferencia** se encuentra en la siguiente ruta:
                     └── preference  # directorio principal de preferencias
 
 ```
-
 Aquí puede ver un [Demo](https://demo-ui.erpya.com/#/7aa4242a-93c0-42d8-92be-8250002d3e3c/d97027fd-4cd5-445e-8fd8-ef5d3f7959b4/window/53418?tabParent=0&action=fa50908e-40f1-11e9-91a1-0242ac140002)
+
+El llamado al consumo de servicio de  **Preferencia** se encuentra en la siguiente ruta:
+```bash
+└─ src                            # Código fuente principal
+    └─ api                        # Servicios globales
+      └─ ADempiere                # Servicios específicos de ADempiere
+            └─ field              # Campos
+                └─ preference     # Directorio principal de los servicio preferencia
+
+```
+
+
+Los servicios llamados del componente son <br>
+[GET adempiere-api/ui/set-preference](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)<br>
+[POST adempiere-api/ui/delete-preference](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)
 
 ### Por hacer
 
 En la versión ADempiere-UI, las preferencias de campo no están configuradas. Por tanto, se requiere que se corrija el problema para que se puedan establecer estas preferencias.
 
-Este problema se informó en los problemas: https://github.com/adempiere/adempiere-vue/issues/814 
+Este problema se informó en el issues [814](https://github.com/adempiere/adempiere-vue/issues/814)

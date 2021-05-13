@@ -28,6 +28,19 @@
         :disabled="Boolean(key > 0 && isCreateNew)"
         :style="tabParentStyle"
       >
+        <span v-if="key === 0" slot="label">
+          <el-tooltip v-if="key === 0" :content="lock ? $t('data.lockRecord') : $t('data.unlockRecord')" placement="top">
+            <el-button type="text" @click="lockRecord()">
+              <i :class="lock ? 'el-icon-unlock' : 'el-icon-lock'" style="font-size: 15px;color: black;" />
+            </el-button>
+          </el-tooltip>
+          <span :style="lock ? 'color: #1890ff;': 'color: red;'">
+            {{ tabAttributes.name }}
+          </span>
+        </span>
+        <span v-else slot="label">
+          {{ tabAttributes.name }}
+        </span>
         <main-panel
           :parent-uuid="windowUuid"
           :container-uuid="tabAttributes.uuid"
@@ -54,7 +67,8 @@ export default {
   mixins: [tabMixin],
   data() {
     return {
-      currentTab: this.$route.query.tabParent
+      currentTab: this.$route.query.tabParent,
+      lock: false
     }
   },
   computed: {
@@ -97,9 +111,47 @@ export default {
     },
     tabUuid(value) {
       this.setCurrentTab()
+    },
+    record(value) {
+      const tableName = this.windowMetadata.firstTab.tableName
+      if (value) {
+        this.$store.dispatch('getPrivateAccessFromServer', {
+          tableName,
+          recordId: this.record[tableName + '_ID'],
+          recordUuid: this.record.UUID
+        })
+          .then(privateAccessResponse => {
+            this.lock = privateAccessResponse.isLocked
+          })
+      }
     }
   },
   methods: {
+    lockRecord() {
+      const tableName = this.windowMetadata.firstTab.tableName
+      const action = this.lock ? 'lockRecord' : 'unlockRecord'
+      this.$store.dispatch(action, {
+        tableName,
+        recordId: this.record[tableName + '_ID'],
+        recordUuid: this.record.UUID
+      })
+        .then(() => {
+          this.lock = !this.lock
+          this.$message({
+            type: 'success',
+            message: this.$t('data.notification.' + action),
+            showClose: true
+          })
+        })
+        .catch(() => {
+          this.lock = !this.lock
+          this.$message({
+            type: 'error',
+            message: this.$t('data.isError') + this.$t('data.' + action),
+            showClose: true
+          })
+        })
+    },
     setCurrentTab() {
       this.$store.dispatch('setCurrentTab', {
         parentUuid: this.windowUuid,

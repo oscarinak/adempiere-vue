@@ -64,7 +64,6 @@
                     placement="top"
                     trigger="click"
                     style="padding: 0px;"
-                    :hide="visibleForDesktop"
                   >
                     <component
                       :is="optionFieldFComponentRender"
@@ -75,7 +74,7 @@
                     />
                     <el-button slot="reference" type="text" style="color: #606266;">
                       <div class="contents">
-                        <div v-if="option.name !== $t('language')" style="margin-right: 5%;padding-top: 3%;">
+                        <div v-if="!option.svg" style="margin-right: 5%;padding-top: 3%;">
                           <i :class="option.icon" style="font-weight: bolder;" />
                         </div>
                         <div v-else style="margin-right: 5%">
@@ -92,7 +91,7 @@
                     </el-button>
                   </el-popover>
                   <div v-if="isMobile" class="contents">
-                    <div v-if="option.name !== $t('language')" style="margin-right: 5%;padding-top: 3%;">
+                    <div v-if="!option.svg" style="margin-right: 5%;padding-top: 3%;">
                       <i :class="option.icon" style="font-weight: bolder;" />
                     </div>
                     <div v-else style="margin-right: 5%">
@@ -143,10 +142,13 @@
                   />
                   <el-button slot="reference" type="text" style="color: #606266;">
                     <div class="contents">
-                      <div v-if="option.name !== $t('language')" style="margin-right: 5%;padding-top: 3%;">
+                      <div
+                        v-if="!option.svg"
+                        style="margin-right: 5%;padding-top: 3%;"
+                      >
                         <i :class="option.icon" style="font-weight: bolder;" />
                       </div>
-                      <div v-else style="margin-right: 5%">
+                      <div v-else style="margin-right: 5%;; padding-left: 2%;">
                         <svg-icon :icon-class="option.icon" style="margin-right: 5px;" />
                       </div>
                       <div>
@@ -160,7 +162,7 @@
                   </el-button>
                 </el-popover>
                 <div v-if="false" class="contents">
-                  <div v-if="option.name !== $t('language')" style="margin-right: 5%;padding-top: 3%;">
+                  <div v-if="!option.svg" style="margin-right: 5%;padding-top: 3%;">
                     <i :class="option.icon" style="font-weight: bolder;" />
                   </div>
                   <div v-else style="margin-right: 5%">
@@ -178,6 +180,21 @@
             </el-submenu>
           </el-menu>
         </template>
+        <el-popover
+          v-if="openOptionField && !isEmptyValue(optionColumnName) && (optionColumnName === field.columnName) && showPopoverPath"
+          v-model="openOptionField"
+          placement="top-start"
+          width="400"
+          trigger="click"
+        >
+          <component
+            :is="optionFieldFComponentRender"
+            :field-attributes="fieldAttributes"
+            :source-field="fieldAttributes"
+            :field-value="valueField"
+          />
+          <el-button slot="reference" type="text" :disabled="true" @click="openOptionField = !openOptionField" />
+        </el-popover>
         <component
           :is="componentRender"
           :ref="field.columnName"
@@ -242,7 +259,9 @@ export default {
     return {
       field: {},
       visibleForDesktop: false,
-      triggerMenu: 'click'
+      triggerMenu: 'click',
+      showPopoverPath: false,
+      optionColumnName: this.$route.query.fieldColumnName
     }
   },
   computed: {
@@ -266,7 +285,9 @@ export default {
     },
     optionFieldFComponentRender() {
       let component
-      switch (this.contextMenuField.name) {
+      const option = this.optionField.find(option => this.$route.query.typeAction === option.name)
+      const nameComponent = this.isEmptyValue(option) ? this.contextMenuField.name : this.$route.query.typeAction
+      switch (nameComponent) {
         case this.$t('field.info'):
           component = () => import('@/components/ADempiere/Field/contextMenuField/contextInfo')
           break
@@ -278,6 +299,9 @@ export default {
           break
         case this.$t('field.preference'):
           component = () => import('@/components/ADempiere/Field/contextMenuField/preference/index')
+          break
+        case this.$t('field.logsField'):
+          component = () => import('@/components/ADempiere/Field/contextMenuField/changeLogs/index')
           break
       }
       return component
@@ -536,18 +560,21 @@ export default {
           name: this.$t('field.info'),
           enabled: true,
           fieldAttributes: this.fieldAttributes,
+          svg: false,
           icon: 'el-icon-info'
         },
         {
           name: this.$t('table.ProcessActivity.zoomIn'),
           enabled: this.isContextInfo,
           fieldAttributes: this.fieldAttributes,
+          svg: false,
           icon: 'el-icon-files'
         },
         {
           name: this.$t('language'),
           enabled: this.field.isTranslatedField,
           fieldAttributes: this.fieldAttributes,
+          svg: true,
           icon: 'language'
         },
         {
@@ -556,6 +583,7 @@ export default {
           fieldAttributes: this.fieldAttributes,
           recordDataFields: this.recordDataFields,
           valueField: this.valueField,
+          svg: false,
           icon: 'el-icon-s-operation'
         },
         {
@@ -563,7 +591,16 @@ export default {
           enabled: true,
           fieldAttributes: this.fieldAttributes,
           valueField: this.valueField,
+          svg: false,
           icon: 'el-icon-notebook-2'
+        },
+        {
+          name: this.$t('field.logsField'),
+          enabled: true,
+          fieldAttributes: this.fieldAttributes,
+          valueField: this.valueField,
+          svg: true,
+          icon: 'tree-table'
         }
       ]
     },
@@ -579,6 +616,28 @@ export default {
         containerUuid: this.fieldAttributes.containerUuid,
         columnName: this.fieldAttributes.columnName
       })
+    },
+    openOptionField: {
+      get() {
+        const option = this.optionField.find(option => this.$route.query.typeAction === option.name)
+        if (!this.isEmptyValue(this.$route.query) && option) {
+          return true
+        }
+        return false
+      },
+      set(value) {
+        if (!value) {
+          this.showPopoverPath = false
+          this.$router.push({
+            name: this.$route.name,
+            query: {
+              ...this.$route.query,
+              typeAction: '',
+              fieldColumnName: ''
+            }
+          }, () => {})
+        }
+      }
     }
   },
   watch: {
@@ -587,9 +646,26 @@ export default {
     },
     metadataField(value) {
       this.field = value
+    },
+    openOptionField(value) {
+      if (!value) {
+        this.showPopoverPath = false
+      }
     }
   },
   created() {
+    this.timeOut = setTimeout(() => {
+      if (this.isMobile && this.optionColumnName === this.field.columnName) {
+        this.$store.commit('changeShowRigthPanel', true)
+        this.$store.dispatch('setOptionField', {
+          fieldAttributes: this.fieldAttributes,
+          name: this.$route.query.typeAction,
+          valueField: this.valueField
+        })
+      } else {
+        this.showPopoverPath = true
+      }
+    }, 2000)
     // assined field with prop
     this.field = this.metadataField
     if (this.field.isCustomField && !this.field.componentPath) {
@@ -628,6 +704,14 @@ export default {
         this.$store.commit('changeShowRigthPanel', true)
       } else {
         this.visibleForDesktop = true
+        this.$router.push({
+          name: this.$route.name,
+          query: {
+            ...this.$route.query,
+            typeAction: key,
+            fieldColumnName: this.field.columnName
+          }
+        }, () => {})
       }
       this.$store.commit('changeShowPopoverField', true)
       this.$store.dispatch('setOptionField', option)
@@ -639,6 +723,7 @@ export default {
       }
     },
     handleCommand(command) {
+      console.log({ command })
       this.$store.commit('setRecordAccess', false)
       if (command.name === this.$t('table.ProcessActivity.zoomIn')) {
         this.redirect({ window: command.fieldAttributes.reference.zoomWindows[0] })
@@ -766,6 +851,9 @@ export default {
 </style>
 
 <style lang="scss">
+  .el-popover {
+    position: fixed;
+  }
   .custom-tittle-popover {
     font-size: 14px;
     font-weight: bold;

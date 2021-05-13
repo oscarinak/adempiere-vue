@@ -25,6 +25,7 @@ import DataTable from '@/components/ADempiere/DataTable'
 import splitPane from 'vue-splitpane'
 // Container Info
 import ChatEntries from '@/components/ADempiere/ChatEntries'
+import ListChatEntry from '@/components/ADempiere/ChatEntries/listChatEntry'
 import RecordLogs from '@/components/ADempiere/ContainerInfo/recordLogs'
 import WorkflowLogs from '@/components/ADempiere/ContainerInfo/workflowLogs'
 // Workflow
@@ -50,6 +51,7 @@ export default {
     ModalDialog,
     RightPanel,
     ChatEntries,
+    ListChatEntry,
     RecordLogs,
     WorkflowLogs,
     WorkflowStatusBar,
@@ -110,10 +112,17 @@ export default {
         case this.$t('field.preference'):
           component = () => import('@/components/ADempiere/Field/contextMenuField/preference/index')
           break
+        case this.$t('field.logsField'):
+          component = () => import('@/components/ADempiere/Field/contextMenuField/changeLogs/index')
+          break
       }
       return component
     },
     showRecordAccess() {
+      if (this.$route.query.typeAction === 'recordAccess') {
+        this.$store.commit('changeShowRigthPanel', true)
+        return true
+      }
       return this.$store.getters.getShowRecordAccess
     },
     isNewRecord() {
@@ -243,7 +252,7 @@ export default {
       return this.$store.getters.getWindow(this.windowUuid)
     },
     isShowedTabsChildren() {
-      if (this.windowMetadata && this.windowMetadata.isShowedTabsChildren) {
+      if (this.windowMetadata && this.windowMetadata.isShowedTabsChildren && this.isEmptyValue(this.$route.query.typeAction)) {
         return this.windowMetadata.isShowedTabsChildren
       }
       return false
@@ -353,9 +362,31 @@ export default {
             }
           })
       }
+    },
+    getRecord(value) {
+      if (value && this.getTableName && this.recordId && this.isEmptyValue(this.gettersListRecordLogs)) {
+        this.$store.dispatch('listRecordLogs', {
+          tableName: this.getTableName,
+          recordId: this.recordId,
+          recordUuid: value.UUID
+        })
+      }
+      if (!this.isEmptyValue(this.windowMetadata.currentTab.tableName) && !this.isEmptyValue(value) && (!this.isEmptyValue(this.$route.query) && this.$route.query.typeAction === 'recordAccess')) {
+        this.$store.commit('setRecordAccess', true)
+      }
+      if (!this.isEmptyValue(this.windowMetadata.currentTab.tableName) && !this.isEmptyValue(value) && this.isMobile) {
+        this.$store.dispatch(this.activeInfo, {
+          tableName: this.getTableName,
+          recordId: this.recordId,
+          recordUuid: value.UUID
+        })
+      }
     }
   },
   created() {
+    if (!this.isEmptyValue(this.currentRecord) && (!this.isEmptyValue(this.$route.query) && this.$route.query.typeAction === 'recordAccess')) {
+      this.$store.commit('setRecordAccess', true)
+    }
     this.getWindow()
     if (this.isShowedRecordNavigation) {
       this.handleResize()

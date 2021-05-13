@@ -42,25 +42,9 @@ The default value for all entities checks is the follow:
 
 In desktop version just make click over a field and select the option "**Preference**", the preference dialog will be showed at center.
 
-### Create Preference
-
-![How to create preference in Desktop version]('/images/components/preference/zk-desktop-version-preference.gif' "How to create preference in Desktop version")
-
-### Delete Preference
-
-![How to delete preference in the Desktop version]('/images/components/preference/zk-desktop-version-preference.gif' "How to delete preference in the Desktop version")
-
 ## How work in mobile version?
 
 In mobile version just make click over a field and select the option "**Preference**", the preference dialog will be opened at right as a drawer.
-
-### Create Preference
-
-![How to create preference in mobile version]('/images/components/preference/preference-desktop-mobile.gif' "How to create preference in mobile version")
-
-### Delete Preference
-
-![How to delete preference in mobile version]('/images/components/preference/preference-desktop-mobile.gif' "How to delete preference in mobile version")
 
 ## Develop Options
 
@@ -77,8 +61,21 @@ The **Preference** dialog was written on the follow path:
 ```
 A [demo](https://demo-ui.erpya.com/#/7aa4242a-93c0-42d8-92be-8250002d3e3c/d97027fd-4cd5-445e-8fd8-ef5d3f7959b4/window/53418?tabParent=0&action=fa50908e-40f1-11e9-91a1-0242ac140002) is here
 
+The **Preference** service consumption call is in the following path:
+```bash
+└─ src                         # Main source code.
+    └─ api                     # Global services
+      └─ ADempiere             # ADempiere specific services
+            └─ field           # fields
+                └─ preference  # Main service directory preference
+
+```
+The component's services are <br>
+[GET adempiere-api/ui/set-preference](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)<br>
+[POST adempiere-api/ui/delete-preference](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)
+
 ### To do
 
 In the ADempiere-UI version, field preferences are not set. Therefore, it is required that the problem be corrected so that these preferences can be established.
 
-This problem was reported in the issues: https://github.com/adempiere/adempiere-vue/issues/814
+This problem was reported in the issues [814](https://github.com/adempiere/adempiere-vue/issues/814)

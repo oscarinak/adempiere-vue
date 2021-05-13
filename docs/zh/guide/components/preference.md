@@ -2,10 +2,10 @@
 
 允許您默認設置寄存器的值，可以通過以下操作完成：
 
-  -**檢查公司**：設置所有公司的值
-  -**檢查組織**：設置所有組織的值
-  -**檢查用戶**：設置所有用戶的值
-  -**檢查窗口**：設置所有窗口的值
+  - **檢查公司**：設置所有公司的值
+  - **檢查組織**：設置所有組織的值
+  - **檢查用戶**：設置所有用戶的值
+  - **檢查窗口**：設置所有窗口的值
 
 ## ADempiere-ZK版本
 
@@ -34,32 +34,16 @@
 ::: tip
 默認情況下，該字段包含首選項設置
 
-  -**對於本公司的所有組織，此用戶和此窗口**
+  - **對於本公司的所有組織，此用戶和此窗口**
 :::
 
 ## 在桌面版中如何使用？
 
 在桌面版本中，單擊該字段以查看其顯示的菜單，然後選擇選項“ **潛在性**”以設置所需的首選項值。
 
-### 創建首選項
-
-![如何在桌面版本中創建首選項]('/images/components/preference/zk-desktop-version-preference.gif' "如何在桌面版本中創建首選項")
-
-### 刪除首選項
-
-![如何在桌面版本中刪除首選項]('/images/components/preference/zk-desktop-version-preference.gif' "如何在桌面版本中刪除首選項")
-
 ## 在移動版本中如何使用？
 
 在移動版本中，單擊該字段以查看其顯示的菜單，然後選擇選項“ **潛在性**”以設置所需的首選項值。
-
-### 創建首選項
-
-![如何在移動版本中創建首選項]('/images/components/preference/preference-desktop-mobile.gif' "如何在移動版本中創建首選項")
-
-### 刪除首選項
-
-![如何在移動版本中刪除首選項]('/images/components/preference/preference-desktop-mobile.gif' "如何在移動版本中刪除首選項")
 
 ## 技術數據
 
@@ -67,18 +51,30 @@
 “偏好設置”對話框寫在以下路徑上：
 
 ```bash
-└── src                             # main source code
-    └── components                  # global components
-        └── ADempiere               # ADempiere specific components
-            └── field               # Fields
-                └── contextMenu     # Context Menu for all fields
-                    └── preference  # Preference folder
+└── src                             # 主要源代码
+    └── components                  # 全球组件
+        └── ADempiere               # ADempiere的特定组件
+            └── field               # 领域
+                └── contextMenu     # 所有字段的上下文菜单
+                    └── preference  # 偏好文件夹
 
 ```
-[演示](https://demo-ui.erpya.com/#/7aa4242a-93c0-42d8-92be-8250002d3e3c/d97027fd-4cd5-445e-8fd8-ef5d3f7959b4/window/53418?tabParent=0&action=fa50908e-40f1- 11e9-91a1-0242ac140002) 在這裡
+[演示](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service) 在這裡
 
+首选的服务消费电话位于以下路线上。
+```bash
+└─ src                            # 主要源代码
+    └─ api                        # 全球服务
+      └─ ADempiere                # ADempiere的具体服务
+            └─ field              # 领域
+                └─ preference     # 首选服务的主要目录
+
+```
+该组件被调用的服务有<br>
+[GET adempiere-api/ui/set-preference](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)<br>
+[POST adempiere-api/ui/delete-preference](https://adempiere.github.io/proxy-adempiere-api/guide/default-modules/adempiere-api/user.html#user-service)
 ### 去做
 
 在ADempiere-UI版本中，未設置字段首選項。因此，要求糾正問題，以便可以建立這些首選項。
 
-在問題中報告了此問題：https://github.com/adempiere/adempiere-vue/issues/814
+在問題中報告了此問題 [814](https://github.com/adempiere/adempiere-vue/issues/814)
