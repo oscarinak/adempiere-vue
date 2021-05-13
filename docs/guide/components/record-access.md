@@ -48,3 +48,24 @@ It is used to configure the accesses and locks of a role in a specific registry
 ## Functions or Observations
 - Function: Configuration of roles to give access or block a record
 - Observation: It only applies by registers and by roles, that is, if you want to configure one or more registers, they must do one by one
+
+
+## How is it used in the Desktop version?
+
+In the written version, this component is used as follows:
+
+- First of all, the actions menu button must be located, then check the option "Access to Registry"
+
+- When this option is checked, a window will be displayed showing the list of roles which will configure the accesses or locks of the registry in which it is positioned.
+
+
+## How is it used in the mobile version?
+
+In the mobile version this component is used as follows:
+
+- First of all, the actions menu button must be located, then check the option "Access to Registry"
+
+- When this option is checked, a window will be displayed on the right side where it shows a list of roles which will configure the accesses or locks of the registry in which it is positioned.
+
+
+## Developer Options
